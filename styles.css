@@ -35,12 +35,10 @@ h1 {
 
 h2 {
     color: #333;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #ffffff83;
+    
 }
 
-p {
+.weather-card p {
     color: #333;
    
 }
@@ -120,4 +118,13 @@ p {
 
 .forecast-item h3 {
     margin-bottom: 5px;
+}
+
+.footer {
+    background-color: #ffffff83;
+    
+}
+
+.footer p {
+    margin: 2px;
 }
