@@ -166,13 +166,15 @@ function displayForecast(forecastData) {
         const forecastItem = document.createElement('div');
         forecastItem.classList.add('forecast-item');
         
-        const dateTime = new Date(item.dt * 1000); // Convertir la marca de tiempo a una fecha
+        const dateTime = new Date(item.dt_txt); // Convertir la marca de tiempo a una fecha
         const date = dateTime.toLocaleDateString();
+        const time = dateTime.toLocaleTimeString(); // Obtiene la hora
         const dayOfWeek = getDayOfWeek(dateTime); // Obtener el día de la semana
         const weatherDescription = translateWeatherDescription(item.weather[0].description);// Traduce la descripcion antes de mostrarla
 
         forecastItem.innerHTML = `
             <h3>${dayOfWeek.toUpperCase()}, ${date}</h3>
+            <p>Hora: ${time}</p> 
             <p>Temperatura: ${item.main.temp}°C</p>
             <p>Descripción: ${weatherDescription}</p>
             <p>Humedad: ${item.main.humidity}%</p>
