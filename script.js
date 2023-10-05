@@ -188,7 +188,16 @@ function displayForecast(forecastData) {
 // Agregar un controlador de evento para el botón "Buscar"
 document.getElementById('searchButton').addEventListener('click', updateWeatherByCity);
 
+
+
 // Cargar el pronóstico del tiempo al cargar la página
 updateWeatherByCity();
 
 
+const input = document.getElementById('cityInput')
+
+input.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){
+        updateWeatherByCity()
+    }
+})
