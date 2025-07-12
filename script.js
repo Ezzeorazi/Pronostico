@@ -15,6 +15,13 @@ async function getWeatherData(url) {
     }
 }
 
+function showError(message) {
+    const errorEl = document.getElementById('error-message');
+    if (errorEl) {
+        errorEl.textContent = message;
+    }
+}
+
 // Función para obtener el nombre del día de la semana a partir de una fecha
 function getDayOfWeek(date) {
     const options = { weekday: 'long' }; // Obtiene el nombre completo del día
@@ -142,19 +149,28 @@ function updateWeatherByCity() {
     currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
 
+    showError('');
+
     // Actualiza el pronóstico actual
     getWeatherData(currentWeatherUrl).then(data => {
+        if (data.cod && data.cod !== 200) {
+            showError('Ciudad no encontrada');
+            return;
+        }
         document.getElementById('city').textContent = data.name.toUpperCase();
         document.getElementById('temperature').textContent = data.main.temp;
         document.getElementById('description').textContent = translateWeatherDescription(data.weather[0].description);
         document.getElementById('humidity').textContent = data.main.humidity;
         document.getElementById('wind').textContent = data.wind.speed;
-    });
+    }).catch(() => showError('Error al obtener el clima'));
 
     // Actualiza el pronóstico extendido
     getWeatherData(forecastUrl).then(data => {
+        if (data.cod && data.cod !== "200" && data.cod !== 200) {
+            return;
+        }
         displayForecast(data.list);
-    });
+    }).catch(() => {});
 }
 
 // Función para mostrar el pronóstico extendido
